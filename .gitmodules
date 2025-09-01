@@ -1,0 +1,3 @@
+[submodule "content"]
+	path = content
+	url = https://github.com/Ankoge/PoC---Git-Submodules-Parent-.git
