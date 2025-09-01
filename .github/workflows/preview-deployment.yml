@@ -1,0 +1,37 @@
+name: Preview Deployment
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          # This is the key line for handling submodules
+          submodules: 'true'
+
+      - name: Install Dependencies
+        run: npm install
+
+      # Step to run the developer's unit and integration tests
+      - name: Run Developer Tests
+        run: npm test
+
+      # Step to run the content tests from the submodule
+      - name: Run Content Tests
+        run: npm test
+        working-directory: './content'
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Deploy to Preview Environment
+        # Replace with your actual deployment steps (e.g., Vercel, Netlify)
+        run: echo "Deploying preview..."
